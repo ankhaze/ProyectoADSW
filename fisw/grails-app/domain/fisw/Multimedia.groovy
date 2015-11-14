@@ -1,6 +1,6 @@
 package fisw
 
-class Video {
+class Multimedia {
     String dir;
     String descripccion;
     static constraints = {

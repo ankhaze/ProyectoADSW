@@ -1,7 +1,7 @@
 package fisw
 
-class Foto {
-    String dir;
+class UsuarioProyecto {
+
     static constraints = {
     }
 }

@@ -24,15 +24,17 @@
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="apellido" title="${message(code: 'usuario.apellido.label', default: 'Apellido')}" />
+						<g:sortableColumn property="username" title="${message(code: 'usuario.username.label', default: 'Username')}" />
 					
-						<g:sortableColumn property="estudio_postgrado" title="${message(code: 'usuario.estudio_postgrado.label', default: 'Estudiopostgrado')}" />
-					
-						<g:sortableColumn property="estudio_pregrado" title="${message(code: 'usuario.estudio_pregrado.label', default: 'Estudiopregrado')}" />
+						<g:sortableColumn property="password" title="${message(code: 'usuario.password.label', default: 'Password')}" />
 					
 						<g:sortableColumn property="fecha_registro" title="${message(code: 'usuario.fecha_registro.label', default: 'Fecharegistro')}" />
 					
 						<g:sortableColumn property="nombre" title="${message(code: 'usuario.nombre.label', default: 'Nombre')}" />
+					
+						<g:sortableColumn property="apellido" title="${message(code: 'usuario.apellido.label', default: 'Apellido')}" />
+					
+						<g:sortableColumn property="estudio_pregrado" title="${message(code: 'usuario.estudio_pregrado.label', default: 'Estudiopregrado')}" />
 					
 					</tr>
 				</thead>
@@ -40,15 +42,17 @@
 				<g:each in="${usuarioInstanceList}" status="i" var="usuarioInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${usuarioInstance.id}">${fieldValue(bean: usuarioInstance, field: "apellido")}</g:link></td>
+						<td><g:link action="show" id="${usuarioInstance.id}">${fieldValue(bean: usuarioInstance, field: "username")}</g:link></td>
 					
-						<td>${fieldValue(bean: usuarioInstance, field: "estudio_postgrado")}</td>
-					
-						<td>${fieldValue(bean: usuarioInstance, field: "estudio_pregrado")}</td>
+						<td>${fieldValue(bean: usuarioInstance, field: "password")}</td>
 					
 						<td><g:formatDate date="${usuarioInstance.fecha_registro}" /></td>
 					
 						<td>${fieldValue(bean: usuarioInstance, field: "nombre")}</td>
+					
+						<td>${fieldValue(bean: usuarioInstance, field: "apellido")}</td>
+					
+						<td>${fieldValue(bean: usuarioInstance, field: "estudio_pregrado")}</td>
 					
 					</tr>
 				</g:each>

@@ -1,11 +1,12 @@
 package fisw
 
-
+import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
+@Secured(['IS_AUTHENTICATED_FULLY'])
 class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -18,7 +19,7 @@ class UsuarioController {
     def show(Usuario usuarioInstance) {
         respond usuarioInstance
     }
-
+    @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
     def create() {
         respond new Usuario(params)
     }

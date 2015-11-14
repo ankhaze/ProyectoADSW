@@ -20,7 +20,8 @@
 	<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a>
 		<sec:ifLoggedIn><h1><g:message code="dashboard.header" default="Welcome to Grails Webinar"/></h1></sec:ifLoggedIn></div>
 	<g:layoutBody/>
-	<div class="footer" role="contentinfo"></div><sec:ifLoggedIn><g:link controller="logout"><g:message code="common.logout" default="Logout"/></g:link> </sec:ifLoggedIn>
+	<div class="footer" role="contentinfo"></div><sec:ifLoggedIn><g:link controller="logout"><g:message code="common.logout" default="Logout"/>
+	</g:link> </sec:ifLoggedIn>
 	<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	</body>
 </html>

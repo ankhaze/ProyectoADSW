@@ -2,8 +2,7 @@ package fisw
 
 class Proyecto {
     String nombre;
-    static hasMany = [usuarios:Usuario,areas:Area];
-    static belongsTo = [Area];
+    static hasMany = [usuarios:UsuarioProyecto,areas:AreaProyecto];
     static constraints = {
     }
 }
