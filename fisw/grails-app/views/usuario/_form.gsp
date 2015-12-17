@@ -1,7 +1,5 @@
 <%@ page import="fisw.Usuario" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'username', 'error')} required">
 	<label for="username">
 		<g:message code="usuario.username.label" default="Username" />
@@ -20,15 +18,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'fecha_registro', 'error')} required">
-	<label for="fecha_registro">
-		<g:message code="usuario.fecha_registro.label" default="Fecharegistro" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fecha_registro" precision="day"  value="${usuarioInstance?.fecha_registro}"  />
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'nombre', 'error')} required">
 	<label for="nombre">
 		<g:message code="usuario.nombre.label" default="Nombre" />
@@ -38,30 +27,41 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'apellido', 'error')} required">
+<sec:access expression="hasRole('ROLE_ADMIN')">
+
+<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'fecha_registro', 'error')} ">
+	<label for="fecha_registro">
+		<g:message code="usuario.fecha_registro.label" default="Fecharegistro" />
+		
+	</label>
+	<g:datePicker name="fecha_registro" precision="day"  value="${usuarioInstance?.fecha_registro}" default="none" noSelection="['': '']" />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'apellido', 'error')} ">
 	<label for="apellido">
 		<g:message code="usuario.apellido.label" default="Apellido" />
-		<span class="required-indicator">*</span>
+		
 	</label>
-	<g:textField name="apellido" required="" value="${usuarioInstance?.apellido}"/>
+	<g:textField name="apellido" value="${usuarioInstance?.apellido}"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'estudio_pregrado', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'estudio_pregrado', 'error')} ">
 	<label for="estudio_pregrado">
 		<g:message code="usuario.estudio_pregrado.label" default="Estudiopregrado" />
-		<span class="required-indicator">*</span>
+		
 	</label>
-	<g:textField name="estudio_pregrado" required="" value="${usuarioInstance?.estudio_pregrado}"/>
+	<g:textField name="estudio_pregrado" value="${usuarioInstance?.estudio_pregrado}"/>
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'estudio_postgrado', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'estudio_postgrado', 'error')} ">
 	<label for="estudio_postgrado">
 		<g:message code="usuario.estudio_postgrado.label" default="Estudiopostgrado" />
-		<span class="required-indicator">*</span>
+		
 	</label>
-	<g:textField name="estudio_postgrado" required="" value="${usuarioInstance?.estudio_postgrado}"/>
+	<g:textField name="estudio_postgrado" value="${usuarioInstance?.estudio_postgrado}"/>
 
 </div>
 
@@ -173,3 +173,4 @@
 
 </div>
 
+</sec:access>

@@ -1,23 +1,25 @@
 package fisw
 
-import grails.plugin.springsecurity.annotation.Secured
+
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
 @Transactional(readOnly = true)
-@Secured(['IS_AUTHENTICATED_FULLY'])
 class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+    def springSecurityService
+    @Secured(['ROLE_ADMIN','ROLE_DIREC'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
     }
-
+    @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
     def show(Usuario usuarioInstance) {
-        respond usuarioInstance
+        //respond usuarioInstance
+        respond springSecurityService.currentUser
     }
     @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
     def create() {
@@ -25,6 +27,7 @@ class UsuarioController {
     }
 
     @Transactional
+    @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
     def save(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -46,12 +49,48 @@ class UsuarioController {
             '*' { respond usuarioInstance, [status: CREATED] }
         }
     }
-
+    @Secured(['ROLE_ADMIN','ROLE_DIREC'])
     def edit(Usuario usuarioInstance) {
         respond usuarioInstance
     }
 
+    @Secured(['ROLE_USER'])
+    def editPerfil() {
+        respond springSecurityService.currentUser
+    }
     @Transactional
+    @Secured(['ROLE_USER'])
+    def updatePerfil() {
+        //usuarioInstance = springSecurityService.currentUser
+        def usuario = new Usuario(params)//creo un nuevo usuario a partir de los parametros recibidos
+        def log_usr = springSecurityService.currentUser
+
+        if (usuario == null) { //verifico que no sea nulo
+            notFound()
+            return
+        }
+
+        if (usuario.hasErrors()) {//hago la validación de si es o no correcto el usuario
+            respond usuario.errors, view:'edit'
+            return
+        }
+
+        log_usr.properties = params
+        log_usr.save flush:true //guardo
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Usuario.label', default: 'Usuario'), log_usr.id])
+                redirect action:"show" //redirecciono a show
+                //redirect log_usr //redirecciono a show
+            }
+            '*'{ respond usuario, [status: OK] }
+        }
+    }
+
+    @Transactional
+
+    @Secured(['ROLE_ADMIN','ROLE_DIREC'])
     def update(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -75,6 +114,7 @@ class UsuarioController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN','ROLE_DIREC'])
     def delete(Usuario usuarioInstance) {
 
         if (usuarioInstance == null) {
@@ -92,7 +132,10 @@ class UsuarioController {
             '*'{ render status: NO_CONTENT }
         }
     }
-
+    @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+    def ListarCargos(){
+        render(template:"ListoCargos", layout:"ajax")
+    }
     protected void notFound() {
         request.withFormat {
             form multipartForm {
